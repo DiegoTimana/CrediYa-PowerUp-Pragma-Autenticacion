@@ -1,0 +1,22 @@
+##Spring Configuration
+server:
+  port: 8080
+adapters:
+  r2dbc:
+    host: localhost
+    port: 5432
+    database: mi_base_de_datos
+    schema: public
+    username: usuario_db
+    password: mi_clave_segura
+spring:
+  application:
+    name: autenticacion
+  devtools:
+    add-properties: false
+  h2:
+    console:
+      enabled: true
+      path: /h2
+  profiles:
+    include:
