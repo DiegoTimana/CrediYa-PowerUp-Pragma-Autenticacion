@@ -1,18 +1,14 @@
 package co.com.pragmaautenticacion.model.usuario.gateways;
 
 import co.com.pragmaautenticacion.model.usuario.Usuario;
+import reactor.core.publisher.Mono;
 
 import java.util.List;
 
 public interface UsuarioRepository {
 
-    void guardarUsuario(Usuario usuario);
+    Mono<Usuario> guardar(Usuario usuario);
+    Mono<Boolean> existePorEmail(String email);
 
-    List<Usuario> listarUsuarios();
 
-    Usuario getUsuarioPorId(long idUsuario);
-
-    Usuario editarUsuario(Usuario usuario);
-
-    void eliminarUsuario(long idUsuario);
 }
