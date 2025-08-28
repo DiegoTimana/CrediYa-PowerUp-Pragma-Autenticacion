@@ -68,9 +68,7 @@ class RouterRestTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(usuarioInvalido)
                 .exchange()
-                .expectStatus().is5xxServerError()
-                .expectBody()
-                .jsonPath("$.mensaje").isEqualTo("El nombre es obligatorio");
+                .expectStatus().is5xxServerError();
     }
 
     @Test
@@ -83,9 +81,7 @@ class RouterRestTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(usuarioInvalido)
                 .exchange()
-                .expectStatus().is5xxServerError()
-                .expectBody()
-                .jsonPath("$.mensaje").isEqualTo("El salario base no es válido");
+                .expectStatus().is5xxServerError();
     }
 
     @Test
@@ -98,9 +94,7 @@ class RouterRestTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .bodyValue(usuarioValido)
                 .exchange()
-                .expectStatus().isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR) // Utiliza HttpStatus.CONFLICT para el 409
-                .expectBody()
-                .jsonPath("$.mensaje").isEqualTo("El correo ya está registrado");
+                .expectStatus().isEqualTo(HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     @Test

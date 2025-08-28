@@ -19,8 +19,11 @@ public class UsuarioEntity {
     private Long idUsuario;
     private String nombre;
     private String email;
+    @Column(name = "documento_identidad")
     private String documentoIdentidad;
     private String telefono;
+    @Column(name = "id_rol")
     private Long idRol;
+    @Column(name = "salario_base")
     private BigDecimal salarioBase;
 }

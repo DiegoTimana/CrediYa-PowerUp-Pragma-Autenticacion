@@ -38,7 +38,7 @@ public class RouterRest {
                     summary = "Registrar usuario",
                     description = "Registra un nuevo usuario en el sistema con sus datos personales",
                     tags = {"Usuarios"},
-                    requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
+                    requestBody = @RequestBody(
                             required = true,
                             content = @Content(
                                     mediaType = "application/json",
