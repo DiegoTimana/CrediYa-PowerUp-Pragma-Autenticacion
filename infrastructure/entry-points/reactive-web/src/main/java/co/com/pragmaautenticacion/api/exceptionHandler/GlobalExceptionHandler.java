@@ -1,5 +1,7 @@
 package co.com.pragmaautenticacion.api.exceptionHandler;
 
+import co.com.pragmaautenticacion.api.dto.ErrorResponseDTO;
+import io.swagger.v3.oas.annotations.media.Schema;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -18,7 +20,7 @@ public class GlobalExceptionHandler {
 
     // Ejemplo: validaciones de negocio
     @ExceptionHandler(IllegalArgumentException.class)
-    public Mono<org.springframework.http.ResponseEntity<ErrorResponse>> handleIllegalArgument(
+    public Mono<org.springframework.http.ResponseEntity<ErrorResponseDTO>> handleIllegalArgument(
             IllegalArgumentException ex, ServerWebExchange exchange) {
         logger.warn("Error de validación: {}", ex.getMessage());
         return buildResponse(HttpStatus.BAD_REQUEST, ex.getMessage(), exchange);
@@ -26,7 +28,7 @@ public class GlobalExceptionHandler {
 
     // Ejemplo: duplicados (correo ya registrado)
     @ExceptionHandler(IllegalStateException.class)
-    public Mono<org.springframework.http.ResponseEntity<ErrorResponse>> handleIllegalState(
+    public Mono<org.springframework.http.ResponseEntity<ErrorResponseDTO>> handleIllegalState(
             IllegalStateException ex, ServerWebExchange exchange) {
         logger.warn("Error de estado: {}", ex.getMessage());
         return buildResponse(HttpStatus.CONFLICT, ex.getMessage(), exchange);
@@ -34,16 +36,16 @@ public class GlobalExceptionHandler {
 
     // Cualquier otra excepción no controlada
     @ExceptionHandler(Exception.class)
-    public Mono<org.springframework.http.ResponseEntity<ErrorResponse>> handleGeneral(
+    public Mono<org.springframework.http.ResponseEntity<ErrorResponseDTO>> handleGeneral(
             Exception ex, ServerWebExchange exchange) {
         logger.error("Error inesperado en la API", ex);
         return buildResponse(HttpStatus.INTERNAL_SERVER_ERROR,
                 "Ha ocurrido un error interno, por favor intente más tarde", exchange);
     }
 
-    private Mono<org.springframework.http.ResponseEntity<ErrorResponse>> buildResponse(
+    private Mono<org.springframework.http.ResponseEntity<ErrorResponseDTO>> buildResponse(
             HttpStatus status, String mensaje, ServerWebExchange exchange) {
-        ErrorResponse error = new ErrorResponse(
+        ErrorResponseDTO error = new ErrorResponseDTO(
                 status.value(),
                 mensaje,
                 exchange.getRequest().getPath().toString(),
@@ -54,12 +56,4 @@ public class GlobalExceptionHandler {
                 .contentType(MediaType.APPLICATION_JSON)
                 .body(error));
     }
-
-    // Record de respuesta de error
-    public record ErrorResponse(
-            int status,
-            String mensaje,
-            String path,
-            String timestamp
-    ) {}
 }

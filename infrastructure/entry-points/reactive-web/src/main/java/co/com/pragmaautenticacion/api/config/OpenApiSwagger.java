@@ -1,19 +1,15 @@
 package co.com.pragmaautenticacion.api.config;
 
 import co.com.pragmaautenticacion.api.dto.CrearUsuarioDTO;
+import co.com.pragmaautenticacion.api.dto.ErrorResponseDTO;
 import co.com.pragmaautenticacion.api.dto.UsuarioDTO;
-import co.com.pragmaautenticacion.api.exceptionHandler.GlobalExceptionHandler;
 import io.swagger.v3.oas.models.OpenAPI;
 import io.swagger.v3.oas.models.info.Info;
 import lombok.experimental.UtilityClass;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springdoc.core.fn.builders.operation.Builder;
 import org.springframework.http.MediaType;
-import org.springframework.web.reactive.function.server.ServerRequest;
-import org.springframework.web.reactive.function.server.ServerResponse;
-import reactor.core.publisher.Mono;
+import org.springframework.web.client.HttpClientErrorException;
 
 import static org.springdoc.core.fn.builders.apiresponse.Builder.responseBuilder;
 import static org.springdoc.core.fn.builders.content.Builder.contentBuilder;
@@ -30,6 +26,7 @@ public class OpenApiSwagger {
     private final String BAD_REQUEST_CODE = String.valueOf(HttpStatus.BAD_REQUEST.value());
     private final String INTERNAL_ERROR = HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase();
     private final String INTERNAL_ERROR_CODE = String.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value());
+    private final String CONFLICT_ERROR_CODE = String.valueOf(HttpStatus.CONFLICT.value());
 
     public OpenAPI customOpenAPI() {
         return new OpenAPI()
@@ -51,12 +48,9 @@ public class OpenApiSwagger {
                 .response(responseBuilder().responseCode(CREATED_CODE).description("Usuario registrado")
                         .content(contentBuilder().mediaType(MediaType.APPLICATION_JSON_VALUE)
                                 .schema(schemaBuilder().implementation(UsuarioDTO.class))))
-                .response(responseBuilder().responseCode(BAD_REQUEST_CODE).description(BAD_REQUEST)
+                .response(responseBuilder().responseCode(CONFLICT_ERROR_CODE).description(BAD_REQUEST)
                         .content(contentBuilder().mediaType(MediaType.APPLICATION_JSON_VALUE)
-                                .schema(schemaBuilder().implementation(GlobalExceptionHandler.ErrorResponse.class))))
-                .response(responseBuilder().responseCode(INTERNAL_ERROR_CODE).description(INTERNAL_ERROR)
-                        .content(contentBuilder().mediaType(MediaType.APPLICATION_JSON_VALUE)
-                                .schema(schemaBuilder().implementation(GlobalExceptionHandler.ErrorResponse.class))));
+                                .schema(schemaBuilder().implementation(ErrorResponseDTO.class))));
     }
 
 }
