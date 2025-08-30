@@ -31,9 +31,7 @@ management:
 cors:
   allowed-origins: "http://localhost:4200,http://localhost:8080"
 springdoc:
-  api-docs:
-    enabled: true               # Habilita/deshabilita los docs (default: true)
-    path: /swagger-doc/v3/api-docs           # Cambia la URL base de los docs JSON
   swagger-ui:
-    enabled: true               # Habilita/deshabilita la UI de Swagger
-    path: /swagger-doc/swagger-ui.html      # Cambia la ruta de Swagger UI
+    path: "/api/doc/swagger-ui.html"
+  api-docs:
+    path: "/api/doc/api-docs"

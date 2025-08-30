@@ -10,7 +10,11 @@ import org.springframework.transaction.annotation.Transactional;
 import reactor.core.publisher.Mono;
 
 @Repository
-public class MyReactiveRepositoryAdapter extends ReactiveAdapterOperations<Usuario, UsuarioEntity, Long, MyReactiveRepository>
+public class MyReactiveRepositoryAdapter extends ReactiveAdapterOperations<
+        Usuario,
+        UsuarioEntity,
+        Long,
+        MyReactiveRepository>
     implements UsuarioRepository {
 
     public MyReactiveRepositoryAdapter(MyReactiveRepository repository, ObjectMapper mapper) {
@@ -19,7 +23,7 @@ public class MyReactiveRepositoryAdapter extends ReactiveAdapterOperations<Usuar
          *  super(repository, mapper, d -> mapper.mapBuilder(d,ObjectModel.ObjectModelBuilder.class).build());
          *  Or using mapper.map with the class of the object model
          */
-        super(repository, mapper, d -> mapper.map(d, Usuario.class));
+        super(repository, mapper, entity -> mapper.map(entity, Usuario.class));
     }
 
     @Override
