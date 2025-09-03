@@ -1,8 +1,9 @@
 package co.com.pragmaautenticacion.r2dbc.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Id;
+
 import lombok.*;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
 import java.math.BigDecimal;
@@ -15,15 +16,15 @@ import java.math.BigDecimal;
 @Builder
 public class UsuarioEntity {
     @Id
-    @Column(name = "id_usuario")
+    @Column("id_usuario")
     private Long idUsuario;
     private String nombre;
     private String email;
-    @Column(name = "documento_identidad")
+    @Column("documento_identidad")
     private String documentoIdentidad;
     private String telefono;
-    @Column(name = "id_rol")
+    @Column("id_rol")
     private Long idRol;
-    @Column(name = "salario_base")
+    @Column("salario_base")
     private BigDecimal salarioBase;
 }
